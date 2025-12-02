@@ -10,7 +10,19 @@ AccessModifierOffset: -4 # public/private 关键字向左缩进 4 格
 # 2. 大括号换行风格
 # Attach 模式：大括号 { 紧接在语句后面，不单独换行
 # 例如：void func() {
-BreakBeforeBraces: Attach
+BreakBeforeBraces: Custom
+
+# 3. 详细的换行控制
+BraceWrapping:
+  # 保持函数、if、for 的大括号不换行 (mimic Attach)
+  AfterFunction: false
+  AfterControlStatement: Never
+  AfterClass: false
+  AfterStruct: false
+  
+  # 【你的需求】else 和 catch 强制换行
+  BeforeElse: true
+  BeforeCatch: true
 
 # 3. 指针和引用的对齐方式
 # Left 模式：const string& pattern (你的习惯)
