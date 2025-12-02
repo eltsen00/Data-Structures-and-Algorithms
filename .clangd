@@ -1,3 +1,18 @@
 CompileFlags:
   Compiler: g++
-  Add: [-std=c++14]
+  Add: [-std=c++20]
+Diagnostics:
+  ClangTidy:
+    Add: 
+      - modernize-*  # 开启：建议使用 nullptr
+      - bugprone-* # 开启：潜在的 bug
+      - performance-* # 开启：性能优化建议
+      - readability-* # 开启：可读性建议
+    Remove: 
+      - modernize-use-trailing-return-type # 关闭：你不喜欢的后置返回类型
+      - readability-identifier-length # 关闭：不强制标识符长度
+
+# 只有当没有 compile_commands.json 时才生效的备用选项
+# 如果你有 CMake，这个会自动让位给 CMake 的配置
+If:
+  PathMatch: .*
