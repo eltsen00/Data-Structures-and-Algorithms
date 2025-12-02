@@ -1,0 +1,38 @@
+# 基于 Google 样式进行微调，因为它最接近你的风格
+BasedOnStyle: Google
+
+# 1. 缩进设置
+IndentWidth: 4           # 缩进宽度为 4 个空格
+TabWidth: 4              # Tab 键宽度为 4
+UseTab: Never            # 永远使用空格，不使用制表符（防止跨平台乱码）
+AccessModifierOffset: -4 # public/private 关键字向左缩进 4 格
+
+# 2. 大括号换行风格
+# Attach 模式：大括号 { 紧接在语句后面，不单独换行
+# 例如：void func() {
+BreakBeforeBraces: Attach
+
+# 3. 指针和引用的对齐方式
+# Left 模式：const string& pattern (你的习惯)
+# Right 模式：const string &pattern
+PointerAlignment: Left
+
+# 4. 括号前的空格控制
+# ControlStatements：在 if, for, while 和 ( 之间加空格
+# 例如：for (int i...) 而不是 for(int i...)
+#SpaceBeforeParens: ControlStatements
+SpaceBeforeParens: Never
+
+# 5. 一行代码长度限制
+# 设置为 120，现代显示器不需要限制在 80 列
+ColumnLimit: 120
+
+# 6. 杂项微调
+# 允许短的代码块（如 return {};）写在同一行
+AllowShortBlocksOnASingleLine: Empty
+# 允许短函数写在同一行（例如空函数）
+AllowShortFunctionsOnASingleLine: Empty
+# 不保持 #include 排序（按字母顺序，看起来更舒服）
+SortIncludes: false
+# 在赋值运算符 (=, +=) 周围加空格
+SpaceBeforeAssignmentOperators: true
