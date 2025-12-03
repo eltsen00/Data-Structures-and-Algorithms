@@ -15,7 +15,6 @@ Diagnostics:
       - modernize-deprecated-headers # 开启：建议使用现代头文件
       - modernize-use-override # 开启：建议使用 override 关键字
       - readability-simplify-boolean-expr # 开启：简化布尔表达式
-      - readability-container-size-empty # 开启：使用 empty() 替代 size() == 0
       - readability-named-parameter # 开启：命名参数建议
     Remove: 
       - modernize-use-trailing-return-type # 关闭：你不喜欢的后置返回类型
@@ -24,3 +23,4 @@ Diagnostics:
       - readability-isolate-declaration # 关闭：不强制单独声明
       - google-explicit-constructor # 关闭：不强制显式构造函数
       - bugprone-easily-swappable-parameters # 关闭：不强制参数顺序检查
+      - performance-avoid-endl # 关闭：允许使用 endl
