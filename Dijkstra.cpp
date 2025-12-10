@@ -5,8 +5,7 @@ Dijkstra 算法和标准的 BFS 算法的区别只有两个：
 1、标准 BFS 算法使用普通队列，Dijkstra 算法使用优先级队列，让距离起点更近的节点优先出队（贪心思想的体现）。
 2、标准 BFS 算法使用一个 visited 数组记录访问过的节点，确保算法不会陷入死循环；Dijkstra 算法使用一个 distTo
 数组，确保算法不会陷入死循环，(重点)同时记录起点到其他节点的最短路径。*/
-// 当节点 i 第一次出队时，对应的 distFromStart 就是从起点到节点 i
-// 的最小路径权重和。（推理成立的前提是，经过的的边越多，路径的权重和越大。）
+// 当节点i第一次出队时，对应的distFromStart就是从起点到节点i的最小路径权重和。（推理成立的前提是，经过的的边越多，路径的权重和越大。）
 
 /*队列中可能存在重复节点：
 需要注意的是，对于标准的 BFS 算法，因为入队时就会更新 visited 数组，所以队列中不会存在重复的节点。而 Dijkstra
@@ -54,9 +53,9 @@ struct Compare {
 std::vector<int> dijkstra(Graph& graph, int src) {
     // 初始化 distTo 数组
     std::vector<int> distTo(graph.numNodes(), INT_MAX);
-    distTo[src] = 0; // 记得写
+    distTo[src] = 0;  // 记得写
     std::priority_queue<State, std::vector<State>, Compare> pq;
-    pq.push(State{src, 0});
+    pq.push(State(src, 0));
     while(!pq.empty()) {
         State cur = pq.top();
         pq.pop();
@@ -71,10 +70,10 @@ std::vector<int> dijkstra(Graph& graph, int src) {
         }
         for(const Edge& child : graph.neighbors(curNode)) {
             int nextTo = child.to;
-            int nextWeight = child.weight + curDistFromStart;
-            if(nextWeight < distTo[nextTo]) {  // 发现更短的路，更新路径
-                pq.push(State{nextTo, nextWeight});
-                distTo[nextTo] = nextWeight;
+            int nextDistFromStart = child.weight + curDistFromStart;
+            if(nextDistFromStart < distTo[nextTo]) {  // 发现更短的路，更新路径
+                pq.push(State(nextTo, nextDistFromStart));
+                distTo[nextTo] = nextDistFromStart;
             }
         }
     }

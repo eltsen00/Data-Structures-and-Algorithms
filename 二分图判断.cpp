@@ -12,21 +12,15 @@ void isBipartiteDFS(vector<vector<int>>& graph,int node){
     }
     visited[node]=true;
     for(int& nextNode:graph[node]){
-        if(!visited[node]){
+        if(!visited[nextNode]){
             color[nextNode]=!color[node];
             isBipartiteDFS(graph,nextNode);
-            if(!ok){
-                return;
-            }
         }
         else{
             if(color[nextNode]==color[node]){
                 ok=false;
                 return;
             }
-        }
-        if(!ok){
-            return;
         }
     }
 }
