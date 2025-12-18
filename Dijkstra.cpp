@@ -20,8 +20,10 @@ struct Edge {
     int weight;
 };
 
-struct Graph {
+class Graph {
     std::vector<std::vector<Edge>> adj;
+
+public:
     Graph(int n) : adj(n) {}
     const std::vector<Edge>& neighbors(int u) {
         return adj[u];
@@ -37,8 +39,10 @@ struct State {
     int node;
     // 从起点 s 到当前 node 节点的最小路径权重和
     int distFromStart;
-
     State(int _node, int _distFromStart) : node(_node), distFromStart(_distFromStart) {}
+    bool operator>(const State& other) const {
+        return distFromStart > other.distFromStart;
+    }
 };
 
 // 自定义比较器，使得 distFromStart 较小的 State 先出队
