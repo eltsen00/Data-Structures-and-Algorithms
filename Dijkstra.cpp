@@ -52,13 +52,12 @@ struct Compare {
     }
 };
 
-// 输入不包含负权重边的加权图 graph 和起点 src
-// 返回从起点 src 到其他节点的最小路径权重和
+// 重点：一个节点第一次出队时，对应的 distFromStart 就是从起点到该节点的最小路径权重和
 std::vector<int> dijkstra(Graph& graph, int src) {
     // 初始化 distTo 数组
     std::vector<int> distTo(graph.numNodes(), INT_MAX);
     distTo[src] = 0;  // 记得写
-    std::priority_queue<State, std::vector<State>, Compare> pq;
+    std::priority_queue<State, std::vector<State>, std::greater<State>> pq;
     pq.push(State(src, 0));
     while(!pq.empty()) {
         State cur = pq.top();
