@@ -3,8 +3,8 @@ using namespace std;
 //要修改节点就要用root->left/right = ...，然后返回root，不能直接root->left/right = ...，否则会断开
 class BST {
 public:
-    BST(int x) : val(x), left(NULL), right(NULL) {}
-    BST() : val(0), left(NULL), right(NULL) {}
+    BST(int x) : val(x), left(nullptr), right(nullptr) {}
+    BST() : val(0), left(nullptr), right(nullptr) {}
     BST(const BST& other) : val(other.val), left(nullptr), right(nullptr) {
         if (other.left) {
             left = new BST(*other.left);
@@ -85,12 +85,15 @@ public:
                 }
                 //通过操作指针实现真正的删除
                 //复制一个minNode,以免在下面递归调用deleteNode时minNode被释放
-                BST* copyNode = new BST(*minNode);
+                /*BST* copyNode = new BST(*minNode);
                 root->right = deleteNode(root->right, minNode->val);//注意，在递归调用deleteNode后，minNode已经被释放了
                 copyNode->left = root->left;
                 copyNode->right = root->right;
                 delete root;
-                return copyNode;
+                return copyNode;*/
+                root->val = minNode->val; // 无需交换，直接覆盖值
+                root->right = deleteNode(root->right, minNode->val);
+                return root;
             }
         }
         else if (key < root->val) {

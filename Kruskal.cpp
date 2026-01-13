@@ -29,7 +29,7 @@ int Kruskal(const std::vector<std::vector<int>>& edges, int n) {
     for(int i = 0; i < n; i++) {
         parent[i] = i;
     }
-    int mst = 0;
+    int mst = 0; // 最小生成树的权重和
     for(const auto& edge : edges) {
         int u = edge[0];
         int v = edge[1];

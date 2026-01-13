@@ -7,6 +7,7 @@ vector<bool> onPath;
 bool hasCycle = false;
 int countNode = 0;
 
+// 判断无向图是否为树：连通且无环
 void traverse(vector<vector<int>>& graph, int node, int parent) {
     if(hasCycle) return;
     visited[node] = true;

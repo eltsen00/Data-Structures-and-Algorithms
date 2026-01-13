@@ -7,8 +7,8 @@ vector<int> buildNext(string &pattern) {
     int m = (int)pattern.size();
     vector<int> next(m, 0);
     if(m == 0) return next;
-    for(int i = 1, j = 0; i < m; i++) {  // j 代表长度，也代表下一位待匹配字符的位置
-        while(j > 0 && pattern[i] != pattern[j]) { // j = 0 不能再回退了
+    for(int i = 1, j = 0; i < m; i++) {             // j 代表长度，也代表下一位待匹配字符的位置
+        while(j > 0 && pattern[i] != pattern[j]) {  // j = 0 不能再回退了
             j = next[j - 1];
         }
         if(pattern[i] == pattern[j]) {

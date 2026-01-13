@@ -3,7 +3,7 @@ using namespace std;
 //一维前缀和
 class NumArray {
     // 前缀和数组
-    std::vector<int> preSum;
+    std::vector<int> preSum; // preSum[i] 记录数组 nums 在区间 [0, i-1] 的元素和
 
     // 输入一个数组，构造前缀和
     public:

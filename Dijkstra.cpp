@@ -18,17 +18,18 @@ Dijkstra 算法和标准的 BFS 算法的区别只有两个：
 struct Edge {
     int to;
     int weight;
+    Edge(int _to, int _weight) : to(_to), weight(_weight) {}
 };
 
 class Graph {
+private:
     std::vector<std::vector<Edge>> adj;
-
 public:
     Graph(int n) : adj(n) {}
-    const std::vector<Edge>& neighbors(int u) {
+    const std::vector<Edge>& neighbors(int u) const {
         return adj[u];
     }
-    std::size_t numNodes() {
+    std::size_t numNodes() const {
         return adj.size();
     }
 };
