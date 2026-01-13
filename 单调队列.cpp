@@ -1,80 +1,82 @@
-// 单调队列可以用来解决滑动窗口中的最大值/最小值问题，因为窗口的长度可以直接通过right - left + 1计算得出，而最大值/最小值不行，所以要通过单调队列的队首元素直接获得。
-#include<deque>
-#include<vector>
-#include<stdexcept>
+// 单调队列可以用来解决滑动窗口中的最大值/最小值问题，因为窗口的长度可以直接通过right - left +
+// 1计算得出，而最大值/最小值不行，所以要通过单调队列的队首元素直接获得。
+#include <deque>
+#include <iostream>
+#include <vector>
+#include <stdexcept>
 using namespace std;
 
 // 单调队列的通用实现，可以高效维护最大值和最小值,相较于普通队列，增加了快速获取最大值和最小值的功能
 template <typename E>
 class MonotonicQueue {
 private:
-    deque<E> data;      // 存储队列中的所有元素
-    deque<E> maxData;   // 存储当前队列中的最大值，单调递减
-    deque<E> minData;   // 存储当前队列中的最小值，单调递增
+    deque<E> data;     // 存储队列中的所有元素
+    deque<E> maxData;  // 存储当前队列中的最大值，从队首到队尾单调递增
+    deque<E> minData;  // 存储当前队列中的最小值，从队首到队尾单调递减
 public:
     // 标准队列 API，向队尾加入元素
-    void push(E elem){
+    void push(E elem) {
         data.push_back(elem);
         // 更新最大值队列
-        while (!maxData.empty() && maxData.back() < elem) {
+        while(!maxData.empty() && maxData.back() < elem) {
             maxData.pop_back();
         }
         maxData.push_back(elem);
         // 更新最小值队列
-        while (!minData.empty() && minData.back() > elem) {
+        while(!minData.empty() && minData.back() > elem) {
             minData.pop_back();
         }
         minData.push_back(elem);
     }
 
     // 标准队列 API，从队头弹出元素，符合先进先出的顺序
-    E pop(){
-        if (data.empty()) {
+    E pop() {
+        if(data.empty()) {
             throw runtime_error("Queue is empty");
         }
         E front = data.front();
         data.pop_front();
         // 更新最大值队列
-        if (front == maxData.front()) {
+        if(front == maxData.front()) {
             maxData.pop_front();
         }
         // 更新最小值队列
-        if (front == minData.front()) {
+        if(front == minData.front()) {
             minData.pop_front();
         }
         return front;
     }
 
-    E front(){
-        if (data.empty()) {
+    E front() {
+        if(data.empty()) {
             throw runtime_error("Queue is empty");
         }
         return data.front();
     }
 
-    E back(){
-        if (data.empty()) {
+    E back() {
+        if(data.empty()) {
             throw runtime_error("Queue is empty");
         }
         return data.back();
     }
 
     // 标准队列 API，返回队列中的元素个数
-    int size(){
+    int size() {
         return data.size();
     }
 
     // 单调队列特有 API，O(1) 时间计算队列中元素的最大值
-    E max(){
-        if (maxData.empty()) {
+    E max() {
+        if(maxData.empty()) {
             throw runtime_error("Queue is empty");
         }
         return maxData.front();
     }
 
     // 单调队列特有 API，O(1) 时间计算队列中元素的最小值
-    E min(){
-        if (minData.empty()) {
+    E min() {
+        if(minData.empty()) {
             throw runtime_error("Queue is empty");
         }
         return minData.front();
@@ -87,21 +89,49 @@ public:
 vector<int> maxSlidingWindow(vector<int>& nums, int k) {
     deque<int> window;
     vector<int> res;
-    for(int i=0;i<nums.size();i++){
+    for(int i = 0; i < nums.size(); i++) {
         // 淘汰过期元素
-        while(!window.empty()&&window.front()<=i-k){
+        while(!window.empty() && window.front() <= i - k) {
             window.pop_front();
         }
-        // 入队前，保持单调递减
-        while(!window.empty()&&nums[window.back()]<nums[i]){
+        // 入队前，保持队列从队头到队尾单调递减
+        while(!window.empty() && nums[window.back()] < nums[i]) {
             window.pop_back();
         }
-        // 入队
         window.push_back(i);
         // 符合条件时，输出当前窗口的最大值
-        if(i>=k-1){
+        if(i >= k - 1) {
             res.push_back(nums[window.front()]);
         }
     }
     return res;
+}
+
+int main(){
+    try {
+        vector<int> nums = {1,3,-1,-3,5,3,6,7};
+        int k = 3;
+        vector<int> result1 = maxSlidingWindow(nums, k);
+        for(int val : result1){
+            cout << val << " ";
+        }
+        cout << endl;
+        vector<int> result2;
+        MonotonicQueue<int> mq;
+        for(int i = 0; i < nums.size(); i++){
+            mq.push(nums[i]);
+            if(i >= k - 1){
+                result2.push_back(mq.max());
+                mq.pop();
+            }
+        }
+        for(int val : result2){
+            cout << val << " ";
+        }
+        cout << endl;
+    } catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
+        return 1;
+    }
+    return 0;
 }
