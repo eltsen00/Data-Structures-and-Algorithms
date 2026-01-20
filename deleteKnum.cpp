@@ -32,3 +32,10 @@ string removeKdigits(string num, int k) {
     }
     return start == result.size() ? "0" : result.substr(start);
 }
+
+int main(){
+    string s = "1432219";
+    int k = 3;
+    cout << removeKdigits(s, k) << endl; // 输出 "1219"
+    return 0;
+}

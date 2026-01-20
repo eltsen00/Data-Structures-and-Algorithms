@@ -28,10 +28,9 @@ vector<int> KMP(string &text, string &pattern) {
         return res;
     }
     vector<int> next = buildNext(pattern);
-    int i = 0, j = 0;
     int n = (int)text.size();
     int m = (int)pattern.size();
-    for(i = 0; i < n; i++) {
+    for(int i = 0, j = 0; i < n; i++) {
         while(j > 0 && text[i] != pattern[j]) {
             j = next[j - 1];
         }
